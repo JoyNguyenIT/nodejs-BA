@@ -11,9 +11,8 @@ const handleCreateUser = async (
 ) => {
     const newUser = await prisma.user.create({
         data: {
-            name: fullName,
-            email: email,
-            address: address
+            username: fullName,
+            password: ""
         },
     })
     return newUser
@@ -22,6 +21,11 @@ const handleCreateUser = async (
 const getAllUsers = async () => {
     const users = await prisma.user.findMany()
     return users
+}
+
+const getAllRoles = async () => {
+    const roles = await prisma.role.findMany()
+    return roles
 }
 
 const handleDeleteUser = async (id: string) => {
@@ -47,13 +51,12 @@ const handleUpdateUser = async (id: string, fullName: string, email: string, add
             id: +id,
         },
         data: {
-            name: fullName,
-            email: email,
-            address: address
+            username: fullName,
+            password: "email",
         },
     })
     return updateUser;
 }
 
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser }
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser, getAllRoles }

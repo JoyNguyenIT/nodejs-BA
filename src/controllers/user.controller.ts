@@ -1,9 +1,11 @@
+import initSeeds from "config/seed";
 import { Request, Response } from "express";
 import { getAllUsers, getUserById, handleCreateUser, handleDeleteUser, handleUpdateUser } from "services/user.service";
 
 
 const getHomepage = async (req: Request, res: Response) => {
     //get users
+    await initSeeds()
     const listUsers = await getAllUsers();
     return res.render('home', {
         users: listUsers
@@ -15,8 +17,8 @@ const getCreateUser = (req: Request, res: Response) => {
 }
 
 const postCreateUser = async (req: Request, res: Response) => {
-    const { fullName, email, address } = req.body;
-    const newUser = await handleCreateUser(fullName, email, address)
+    const { fullName, username, password, address, phone, accountType, avatar } = req.body;
+    // const newUser = await handleCreateUser(fullName, email, address)
     return res.redirect("/");
 }
 
