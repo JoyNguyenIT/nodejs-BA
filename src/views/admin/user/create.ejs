@@ -39,7 +39,7 @@
                             </ol>
                             <div style="width: 600px; margin: auto">
                                 <h4 style="padding: 10px 0">Create New User</h4>
-                                <form action="/handle-create-user" method="post">
+                                <form action="/admin/handle-create-user" method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">
                                             FullName
@@ -48,8 +48,8 @@
                                             placeholder="Ex: Huy Nguyen">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input name="username" type="text" class="form-control" id="username"
+                                        <label for="username" class="form-label">Email</label>
+                                        <input name="username" type="email" class="form-control" id="username"
                                             placeholder="name@example.com">
                                     </div>
                                     <div class="mb-3">
@@ -64,8 +64,7 @@
                                         </div>
                                         <div class="mb-3 col-6">
                                             <label for="role" class="form-label">Role</label>
-                                            <select class="form-select" aria-label="Default select example"
-                                                name="accountType">
+                                            <select class="form-select" aria-label="Default select example" name="role">
                                                 <% roles.forEach((role, index)=> { %>
                                                     <option value="<%= role.id %>">
                                                         <%= role.name %>
