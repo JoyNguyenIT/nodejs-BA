@@ -11,8 +11,6 @@ const hashPassword = async (password: string) => {
     return hashedPassword;
 }
 
-
-
 const handleCreateUser = async (
     fullName: string, username: string, password: string, address: string, phone: string, avatar: string, role: string
 ) => {

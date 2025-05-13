@@ -5,13 +5,9 @@ import { getAllUsers, getUserById, handleCreateUser, handleDeleteUser, handleUpd
 
 
 const getHomepage = async (req: Request, res: Response) => {
-    //get users
-    await initSeeds()
-    const listUsers = await getAllUsers();
-    return res.render('home', {
-        users: listUsers
-    });
+    return res.render('client/home/show.ejs');
 }
+
 
 const getCreateUser = (req: Request, res: Response) => {
     return res.render('create-user.ejs');
@@ -47,5 +43,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
     await handleUpdateUser(id, fullName, phone, address, role, avatar)
     return res.redirect("/admin/user");
 }
+
+
 
 export { getHomepage, getCreateUser, postCreateUser, postDeleteUser, getViewUser, postUpdateUser }
