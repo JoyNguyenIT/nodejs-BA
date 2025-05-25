@@ -42,7 +42,7 @@ const handleUpdateProduct = async (
 
 const getAllProducts = async () => {
     const products = await prisma.product.findMany();
-    return products
+    return products;
 }
 
 const getProductById = async (id: string) => {

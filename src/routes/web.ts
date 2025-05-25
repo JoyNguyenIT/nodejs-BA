@@ -1,18 +1,34 @@
 import express, { Express } from "express";
-import { getCreateUser, getHomepage, getViewUser, postCreateUser, postDeleteUser, postUpdateUser } from "controllers/user.controller";
+import { getHomepage, getViewUser, postCreateUser, postDeleteUser, postUpdateUser } from "controllers/user.controller";
 import { getAdminCreateUser, getAdminOrderPage, getAdminUserPage, getDashBoard, getListProduct } from "controllers/admin/admin.controller";
 import fileUploadMiddleware from "src/middleware/multer";
 import { getDetailProduct } from "controllers/client/product.controller";
 import { getAdminCreateProduct, getViewProduct, postCreateProduct, postDeleteProduct, postUpdadeProduct } from "controllers/admin/product.controller";
+import initSeeds from "config/seed";
+import { getLoginPage, getRegisterPage, getSuccessRedirect, postLogoutPage, postRegisterPage } from "controllers/client/auth.controller";
+import passport from "passport";
+import { isAdminRole, isLoggedIn } from "src/middleware/auth";
+
 
 const router = express.Router();
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
 
 const webRoute = (app: Express) => {
+    initSeeds();
+
     //client routes
     router.get('/', getHomepage);
     router.get('/product/:id', getDetailProduct);
+    router.get('/login', getLoginPage);
+    router.get('/success-redirect', getSuccessRedirect);
+    router.get('/register', getRegisterPage);
+    router.post('/register', postRegisterPage);
+    router.post('/login', passport.authenticate('local', {
+        successRedirect: '/success-redirect',
+        failureRedirect: '/login',
+        failureMessage: true,
+    }));
+    router.post('/logout', postLogoutPage);
 
 
     //admin routes
@@ -35,8 +51,7 @@ const webRoute = (app: Express) => {
     router.post('/admin/delete-product/:id', postDeleteProduct);
 
 
-    app.use('/', router);
-
+    app.use('/', isAdminRole, router);
 }
 
 export default webRoute

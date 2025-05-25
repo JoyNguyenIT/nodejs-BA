@@ -1,11 +1,16 @@
 import { prisma } from "config/client";
-import initSeeds from "config/seed";
 import { Request, Response } from "express";
+import { getProductsHomepage } from "services/client/item.service";
 import { getAllUsers, getUserById, handleCreateUser, handleDeleteUser, handleUpdateUser } from "services/user.service";
 
 
 const getHomepage = async (req: Request, res: Response) => {
-    return res.render('client/home/show.ejs');
+    const products = await getProductsHomepage();
+    return res.render('client/home/show.ejs',
+        {
+            products
+        }
+    );
 }
 
 
@@ -46,4 +51,6 @@ const postUpdateUser = async (req: Request, res: Response) => {
 
 
 
-export { getHomepage, getCreateUser, postCreateUser, postDeleteUser, getViewUser, postUpdateUser }
+
+
+export { getHomepage, getCreateUser, postCreateUser, postDeleteUser, getViewUser, postUpdateUser, }
