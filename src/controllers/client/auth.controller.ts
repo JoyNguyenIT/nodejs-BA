@@ -19,7 +19,9 @@ const getLoginPage = (req: Request, res: Response) => {
 }
 
 const getRegisterPage = (req: Request, res: Response) => {
-    return res.render('client/auth/register.ejs');
+    return res.render('client/auth/register.ejs', {
+        errors: [],
+    });
 }
 
 const postRegisterPage = async (req: Request, res: Response) => {
@@ -32,7 +34,7 @@ const postRegisterPage = async (req: Request, res: Response) => {
             errors: errorIssue,
         });
     }
-    await handleRegisterUser(
+    const newUser = await handleRegisterUser(
         fullName, username, password
     )
     return res.redirect('/login',);

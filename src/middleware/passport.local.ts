@@ -1,8 +1,7 @@
 import { compare } from "bcrypt";
 import passport, { use } from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
-import { getUserWithRoleById, isUsernameExist } from "services/client/auth.service";
-import { getUserById } from "services/user.service";
+import { getCartByUserId, getUserWithRoleById, isUsernameExist } from "services/client/auth.service";
 
 const configPassportLocal = () => {
     passport.use(new LocalStrategy({
@@ -27,9 +26,10 @@ const configPassportLocal = () => {
         return callback(null, user.id);
     });
 
-    passport.deserializeUser(async function (id: string, callback) {
-        const userInDB = await getUserWithRoleById(id);
-        return callback(null, userInDB);
+    passport.deserializeUser(async function (userId: string, callback) {
+        const userInDB: any = await getUserWithRoleById(userId);
+        const sumCart = await getCartByUserId(userId);
+        return callback(null, { ...userInDB, sumCart });
     });
 }
 

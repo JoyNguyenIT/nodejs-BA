@@ -5,6 +5,7 @@ import { ACCOUNT_TYPE } from "config/constant"
 import exp from 'node:constants';
 import { hashPassword } from 'services/user.service';
 import { use } from 'passport';
+import { getCartDetails } from './item.service';
 
 const findRole = async (name: string = 'USER') => {
     const UserRole = await prisma.role.findUnique({
@@ -68,4 +69,10 @@ const getUserWithRoleById = async (id: string) => {
     return user;
 }
 
-export { handleRegisterUser, findRole, isUsernameExist, comparePassword, getUserWithRoleById }
+const getCartByUserId = async (id: string) => {
+    const cartDetails = await getCartDetails(+id);
+    const sumCart = cartDetails?.length ?? 0;
+    return sumCart;
+}
+
+export { handleRegisterUser, findRole, isUsernameExist, comparePassword, getUserWithRoleById, getCartByUserId }

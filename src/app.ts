@@ -8,7 +8,8 @@ import configPassportLocal from "./middleware/passport.local";
 import session from "express-session";
 import { prisma } from "config/client";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import { PrismaClient } from "@prisma/client";
+import { CartDetail, PrismaClient } from "@prisma/client";
+import { getCartDetails } from "services/client/item.service";
 
 const app = express();
 const PORT = 3000;
@@ -55,6 +56,7 @@ app.use((req, res, next) => {
     res.locals.user = req.user || null;
     next()
 })
+
 
 // webroute
 webRoute(app);

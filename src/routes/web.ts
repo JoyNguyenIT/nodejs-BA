@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import { getHomepage, getViewUser, postCreateUser, postDeleteUser, postUpdateUser } from "controllers/user.controller";
 import { getAdminCreateUser, getAdminOrderPage, getAdminUserPage, getDashBoard, getListProduct } from "controllers/admin/admin.controller";
 import fileUploadMiddleware from "src/middleware/multer";
-import { getDetailProduct } from "controllers/client/product.controller";
+import { getCartPage, getDetailProduct, postAddProductToCart } from "controllers/client/product.controller";
 import { getAdminCreateProduct, getViewProduct, postCreateProduct, postDeleteProduct, postUpdadeProduct } from "controllers/admin/product.controller";
 import initSeeds from "config/seed";
 import { getLoginPage, getRegisterPage, getSuccessRedirect, postLogoutPage, postRegisterPage } from "controllers/client/auth.controller";
@@ -29,6 +29,8 @@ const webRoute = (app: Express) => {
         failureMessage: true,
     }));
     router.post('/logout', postLogoutPage);
+    router.post('/add-product-to-cart/:id', postAddProductToCart);
+    router.get('/cart', getCartPage);
 
 
     //admin routes
